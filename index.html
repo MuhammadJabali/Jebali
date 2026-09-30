@@ -1,62 +1,110 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكاديمية Jebali للرياضيات | Jebali Math Academy</title>
-    <!-- تضمين مكتبة Tailwind CSS للألوان الأخضر والبرتقالي تلقائياً -->
+    <!-- استدعاء مكتبة التنسيق الفوري -->
     <script src="https://tailwindcss.com"></script>
+    <style>
+        @import url('https://googleapis.com');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <div id="root"></div>
+<body class="bg-gray-50 p-4 md:p-8">
 
-    <!-- كود تشغيل لوحة التحكم التفاعلية المزدوجة مباشرة في المتصفح -->
-    <script>
-        // كود تشغيل وتأمين واجهة الأخضر والبرتقالي لأحمد سيد
-        document.getElementById('root').innerHTML = `
-            <div class="min-h-screen p-6 rtl text-right" dir="rtl" id="dashboard-wrapper">
-                <header class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6">
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-800" id="brand-title">أكاديمية Jebali للرياضيات</h1>
-                        <p class="text-sm text-gray-500 mt-1" id="student-title">لوحة متابعة الطالب: أحمد سيد</p>
+    <div class="max-w-6xl mx-auto">
+        <!-- شريط التحكم العلوي والهوية البصرية -->
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6 gap-4">
+            <div>
+                <h1 id="brand-title" class="text-2xl font-black text-gray-800">أكاديمية Jebali للرياضيات</h1>
+                <p id="student-title" class="text-sm font-semibold text-gray-500 mt-1">لوحة متابعة الطالب: أحمد سيد</p>
+            </div>
+            <!-- زر تبديل اللغة المزدوج -->
+            <button onclick="toggleLanguage()" id="lang-btn" class="px-5 py-2.5 bg-gray-800 text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition shadow-md">
+                English
+            </button>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- 1. الكارت المالي (باللون البرتقالي النشط لربطه بـ InstaPay) -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-orange-500 flex flex-col justify-between min-h-[220px]">
+                <div>
+                    <span id="bill-tag" class="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2.5 py-1 rounded-lg">
+                        المستحقات المالية والتسديد
+                    </span>
+                    <h3 class="text-4xl font-black text-gray-800 mt-4">600 EGP</h3>
+                    <p id="bill-desc" class="text-sm font-medium text-gray-500 mt-2">
+                        حصة اليوم: ساعة ونصف (قيد الانتظار)
+                    </p>
+                </div>
+                <a href="https://ipn.eg" target="_blank" id="pay-btn" class="w-full text-center py-3 mt-6 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition shadow-lg shadow-orange-100 block">
+                    سداد فوري عبر InstaPay
+                </a>
+            </div>
+
+            <!-- 2. مؤشر تقدم المنهج الإجمالي (باللون الأخضر الحيوي للنمو والإنجاز) -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-emerald-500 lg:col-span-2 flex flex-col justify-between">
+                <div>
+                    <span id="progress-tag" class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-lg">
+                        مؤشر إنجاز المنهج الكلي
+                    </span>
+                    <div class="flex justify-between items-center mt-5 mb-2">
+                        <span class="text-sm font-bold text-gray-700">Unit 1: Numbers (IGCSE Year 9)</span>
+                        <span class="text-sm font-black text-emerald-600">20%</span>
                     </div>
-                    <button onclick="toggleLang()" class="px-4 py-2 bg-gray-800 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition" id="lang-btn">English</button>
-                </header>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-orange-500 flex flex-col justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2 py-1 rounded" id="bill-tag">المستحقات المالية والتسديد</span>
-                            <h3 class="text-3xl font-extrabold text-gray-800 mt-4">600 EGP</h3>
-                            <p class="text-sm text-gray-500 mt-2" id="bill-desc">حصة اليوم: ساعة ونصف (قيد الانتظار)</p>
-                        </div>
-                        <a href="https://ipn.eg" target="_blank" class="w-full text-center py-3 mt-6 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-100" id="pay-btn">سداد فوري عبر InstaPay</a>
+                    <!-- الرسم البياني الشريطي للأخضر -->
+                    <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden">
+                        <div class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 20%"></div>
                     </div>
+                </div>
 
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-emerald-500 lg:col-span-2">
-                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded" id="progress-tag">مؤشر إنجاز المنهج الكلي</span>
-                        <div class="flex justify-between items-center mt-4 mb-2">
-                            <span class="text-sm font-bold text-gray-700">Unit 1: Numbers (IGCSE Year 9)</span>
-                            <span class="text-sm font-bold text-emerald-600">20%</span>
-                        </div>
-                        <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden">
-                            <div class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 20%"></div>
-                        </div>
-                        <div class="mt-6 space-y-3">
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
-                                <span class="text-sm font-medium text-gray-700">Place value up to billion (NUM-01)</span>
-                                <span class="text-xs font-bold px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg" id="status-tag">مكتمل وتحت التقييم</span>
-                            </div>
-                        </div>
+                <!-- تتبع تفاصيل المهارات داخل لوحة التحكم -->
+                <div class="mt-6 space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl">
+                        <span class="text-sm font-bold text-gray-700">Place value up to billion (NUM-01)</span>
+                        <span id="status-tag" class="text-xs font-bold px-3 py-1 bg-emerald-500 text-white rounded-lg shadow-sm">
+                            مكتمل وتحت التقييم
+                        </span>
                     </div>
                 </div>
             </div>
-        `;
 
+        </div>
+
+        <!-- 3. قسم الواجبات الهجين (تفاعلي + رفع صور لخطوات الحل) -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mt-6">
+            <h3 id="hw-title" class="text-lg font-black text-gray-800 mb-4">
+                الواجب المنزلي الحالي والخطط العلاجية
+            </h3>
+            <div class="p-4 border border-dashed border-orange-200 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-orange-50/20">
+                <div>
+                    <h4 class="font-bold text-gray-800">Assignment 1: Place Value Practice</h4>
+                    <p id="hw-desc" class="text-xs font-semibold text-gray-500 mt-1">
+                        يحتوي على أسئلة الاختيارات + رفع ورقة الخطوات يدوياً
+                    </p>
+                </div>
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button id="btn-quiz" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-500 text-white font-bold rounded-xl text-sm hover:bg-emerald-600 transition shadow-md shadow-emerald-100">
+                        ابدأ الاختبار
+                    </button>
+                    <button id="btn-upload" class="flex-1 md:flex-none px-4 py-2.5 bg-orange-500 text-white font-bold rounded-xl text-sm hover:bg-orange-600 transition shadow-md shadow-orange-100">
+                        📸 رفع الخطوات
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ميكانيزم التبديل اللغوي السريع المزدوج -->
+    <script>
         let isArabic = true;
-        function toggleLang() {
+        function toggleLanguage() {
             isArabic = !isArabic;
-            const wrapper = document.getElementById('dashboard-wrapper');
+            const htmlTag = document.documentElement;
+            const bodyTag = document.body;
+            
             const brand = document.getElementById('brand-title');
             const student = document.getElementById('student-title');
             const langBtn = document.getElementById('lang-btn');
@@ -65,10 +113,14 @@
             const payBtn = document.getElementById('pay-btn');
             const progressTag = document.getElementById('progress-tag');
             const statusTag = document.getElementById('status-tag');
+            const hwTitle = document.getElementById('hw-title');
+            const hwDesc = document.getElementById('hw-desc');
+            const btnQuiz = document.getElementById('btn-quiz');
+            const btnUpload = document.getElementById('btn-upload');
 
             if (!isArabic) {
-                wrapper.className = "min-h-screen p-6 ltr text-left";
-                wrapper.dir = "ltr";
+                htmlTag.dir = "ltr";
+                htmlTag.lang = "en";
                 brand.innerText = "Jebali Math Academy";
                 student.innerText = "Student Dashboard: Ahmed Sayed";
                 langBtn.innerText = "العربية";
@@ -77,9 +129,13 @@
                 payBtn.innerText = "Pay via InstaPay";
                 progressTag.innerText = "Overall Curriculum Progress";
                 statusTag.innerText = "Completed / Evaluating";
+                hwTitle.innerText = "Current Homework & Adaptive Tasks";
+                hwDesc.innerText = "Includes online MCQs + handwritten step upload";
+                btnQuiz.innerText = "Start Quiz";
+                btnUpload.innerText = "📸 Upload Steps";
             } else {
-                wrapper.className = "min-h-screen p-6 rtl text-right";
-                wrapper.dir = "rtl";
+                htmlTag.dir = "rtl";
+                htmlTag.lang = "ar";
                 brand.innerText = "أكاديمية Jebali للرياضيات";
                 student.innerText = "لوحة متابعة الطالب: أحمد سيد";
                 langBtn.innerText = "English";
@@ -88,6 +144,10 @@
                 payBtn.innerText = "سداد فوري عبر InstaPay";
                 progressTag.innerText = "مؤشر إنجاز المنهج الكلي";
                 statusTag.innerText = "مكتمل وتحت التقييم";
+                hwTitle.innerText = "الواجب المنزلي الحالي والخطط العلاجية";
+                hwDesc.innerText = "يحتوي على أسئلة الاختيارات + رفع ورقة الخطوات يدوياً";
+                btnQuiz.innerText = "ابدأ الاختبار";
+                btnUpload.innerText = "📸 رفع الخطوات";
             }
         }
     </script>
