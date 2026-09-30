@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية Jebali للرياضيات | Jebali Math Academy</title>
+    <!-- تضمين مكتبة Tailwind CSS للألوان الأخضر والبرتقالي تلقائياً -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <!-- كود تشغيل لوحة التحكم التفاعلية المزدوجة مباشرة في المتصفح -->
+    <script>
+        // كود تشغيل وتأمين واجهة الأخضر والبرتقالي لأحمد سيد
+        document.getElementById('root').innerHTML = `
+            <div class="min-h-screen p-6 rtl text-right" dir="rtl" id="dashboard-wrapper">
+                <header class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800" id="brand-title">أكاديمية Jebali للرياضيات</h1>
+                        <p class="text-sm text-gray-500 mt-1" id="student-title">لوحة متابعة الطالب: أحمد سيد</p>
+                    </div>
+                    <button onclick="toggleLang()" class="px-4 py-2 bg-gray-800 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition" id="lang-btn">English</button>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-orange-500 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2 py-1 rounded" id="bill-tag">المستحقات المالية والتسديد</span>
+                            <h3 class="text-3xl font-extrabold text-gray-800 mt-4">600 EGP</h3>
+                            <p class="text-sm text-gray-500 mt-2" id="bill-desc">حصة اليوم: ساعة ونصف (قيد الانتظار)</p>
+                        </div>
+                        <a href="https://ipn.eg" target="_blank" class="w-full text-center py-3 mt-6 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-100" id="pay-btn">سداد فوري عبر InstaPay</a>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-emerald-500 lg:col-span-2">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded" id="progress-tag">مؤشر إنجاز المنهج الكلي</span>
+                        <div class="flex justify-between items-center mt-4 mb-2">
+                            <span class="text-sm font-bold text-gray-700">Unit 1: Numbers (IGCSE Year 9)</span>
+                            <span class="text-sm font-bold text-emerald-600">20%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden">
+                            <div class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 20%"></div>
+                        </div>
+                        <div class="mt-6 space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                                <span class="text-sm font-medium text-gray-700">Place value up to billion (NUM-01)</span>
+                                <span class="text-xs font-bold px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg" id="status-tag">مكتمل وتحت التقييم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        let isArabic = true;
+        function toggleLang() {
+            isArabic = !isArabic;
+            const wrapper = document.getElementById('dashboard-wrapper');
+            const brand = document.getElementById('brand-title');
+            const student = document.getElementById('student-title');
+            const langBtn = document.getElementById('lang-btn');
+            const billTag = document.getElementById('bill-tag');
+            const billDesc = document.getElementById('bill-desc');
+            const payBtn = document.getElementById('pay-btn');
+            const progressTag = document.getElementById('progress-tag');
+            const statusTag = document.getElementById('status-tag');
+
+            if (!isArabic) {
+                wrapper.className = "min-h-screen p-6 ltr text-left";
+                wrapper.dir = "ltr";
+                brand.innerText = "Jebali Math Academy";
+                student.innerText = "Student Dashboard: Ahmed Sayed";
+                langBtn.innerText = "العربية";
+                billTag.innerText = "Billing & Invoice";
+                billDesc.innerText = "Today's Session: 1.5 Hours (Unpaid)";
+                payBtn.innerText = "Pay via InstaPay";
+                progressTag.innerText = "Overall Curriculum Progress";
+                statusTag.innerText = "Completed / Evaluating";
+            } else {
+                wrapper.className = "min-h-screen p-6 rtl text-right";
+                wrapper.dir = "rtl";
+                brand.innerText = "أكاديمية Jebali للرياضيات";
+                student.innerText = "لوحة متابعة الطالب: أحمد سيد";
+                langBtn.innerText = "English";
+                billTag.innerText = "المستحقات المالية والتسديد";
+                billDesc.innerText = "حصة اليوم: ساعة ونصف (قيد الانتظار)";
+                payBtn.innerText = "سداد فوري عبر InstaPay";
+                progressTag.innerText = "مؤشر إنجاز المنهج الكلي";
+                statusTag.innerText = "مكتمل وتحت التقييم";
+            }
+        }
+    </script>
+</body>
+</html>
