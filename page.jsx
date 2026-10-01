@@ -1,7 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+// استدعاء مكتبة Supabase مباشرة عبر روابط السحابة (CDN) لتعمل بدون أي برامج خارجية
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+// 1. إعداد اتصال قاعدة البيانات
+// (تأكد من وضع رابط مشروعك ومفتاح الـ API الخاص بك بين علامات التنصيص أسفله)
+const supabaseUrl = 'ضع_رابط_مشروع_سوبابيز_هنا';
+const supabaseAnonKey = 'ضع_مفتاح_سوبابيز_هنا';
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function StudentDashboard() {
   const [isArabic, setIsArabic] = useState(true);
+  
+  // حالات تفاعلية جديدة لجلب المستحقات من قاعدة البيانات
+  const [sessionCost, setSessionCost] = useState(0); 
+  const [isLoading, setIsLoading] = useState(true);
+
+  // 2. وظيفة جلب البيانات تلقائياً بمجرد فتح الطالب للوحة التحكم
+  useEffect(() => {
+    async function fetchLatestSession() {
+      try {
+        // جلب أحدث تكلفة حصة تم حسابها من جدول sessions
+        const { data, error } = await supabase
+          .from('sessions')
+          .select('calculated_cost')
+          .order('created_at', { ascending: false })
+          .limit(1);
+
+        if (error) throw error;
+        
+        // إذا وجد بيانات، قم بتحديث المبلغ في الشاشة
+        if (data && data.length > 0) {
+          setSessionCost(data[0].calculated_cost);
+        }
+      } catch (error) {
+        console.error('حدث خطأ أثناء الاتصال بقاعدة البيانات:', error.message);
+      } finally {
+        // إخفاء حالة التحميل
+        setIsLoading(false);
+      }
+    }
+
+    fetchLatestSession();
+  }, []);
 
   return (
     <div className={`min-h-screen bg-gray-50 p-6 ${isArabic ? 'rtl text-right' : 'ltr text-left'}`} dir={isArabic ? 'rtl' : 'ltr'}>
@@ -28,9 +68,12 @@ export default function StudentDashboard() {
             <span className="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2 py-1 rounded">
               {isArabic ? 'المستحقات المالية والتسديد' : 'Billing & Invoice'}
             </span>
-            <h3 className="text-3xl font-extrabold text-gray-800 mt-4">600 EGP</h3>
+            {/* عرض المبلغ المجلوب من قاعدة البيانات بذكاء */}
+            <h3 className="text-3xl font-extrabold text-gray-800 mt-4">
+              {isLoading ? '...' : `${sessionCost} EGP`}
+            </h3>
             <p className="text-sm text-gray-500 mt-2">
-              {isArabic ? 'حصة اليوم: ساعة ونصف (قيد الانتظار)' : 'Today\'s Session: 1.5 Hours (Unpaid)'}
+              {isArabic ? 'حصة اليوم: (قيد الانتظار)' : 'Today\'s Session (Unpaid)'}
             </p>
           </div>
           <a 
