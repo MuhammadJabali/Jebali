@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-// استدعاء مكتبة Supabase مباشرة عبر روابط السحابة (CDN) لتعمل بدون أي برامج خارجية
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-// 1. إعداد اتصال قاعدة البيانات
-// (تأكد من وضع رابط مشروعك ومفتاح الـ API الخاص بك بين علامات التنصيص أسفله)
-const supabaseUrl = 'ضع_رابط_مشروع_سوبابيز_هنا';
-const supabaseAnonKey = 'ضع_مفتاح_سوبابيز_هنا';
+// إعداد اتصال قاعدة البيانات باستخدام الرابط والمفتاح الخاصين بمشروعك
+const supabaseUrl = 'https://dbirhmmmsuupxlgssmaj.supabase.co';
+const supabaseAnonKey = 'sb_publishable_elnwKhu3CG-QucLSudz9tA_1PruPFrS';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function StudentDashboard() {
   const [isArabic, setIsArabic] = useState(true);
   
-  // حالات تفاعلية جديدة لجلب المستحقات من قاعدة البيانات
+  // حالات تفاعلية لجلب المستحقات من قاعدة البيانات
   const [sessionCost, setSessionCost] = useState(0); 
   const [isLoading, setIsLoading] = useState(true);
 
-  // 2. وظيفة جلب البيانات تلقائياً بمجرد فتح الطالب للوحة التحكم
+  // وظيفة جلب البيانات تلقائياً بمجرد فتح الطالب للوحة التحكم
   useEffect(() => {
     async function fetchLatestSession() {
       try {
@@ -35,7 +33,6 @@ export default function StudentDashboard() {
       } catch (error) {
         console.error('حدث خطأ أثناء الاتصال بقاعدة البيانات:', error.message);
       } finally {
-        // إخفاء حالة التحميل
         setIsLoading(false);
       }
     }
@@ -68,7 +65,6 @@ export default function StudentDashboard() {
             <span className="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2 py-1 rounded">
               {isArabic ? 'المستحقات المالية والتسديد' : 'Billing & Invoice'}
             </span>
-            {/* عرض المبلغ المجلوب من قاعدة البيانات بذكاء */}
             <h3 className="text-3xl font-extrabold text-gray-800 mt-4">
               {isLoading ? '...' : `${sessionCost} EGP`}
             </h3>
